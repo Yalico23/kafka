@@ -1,3 +1,4 @@
+
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
@@ -57,7 +58,7 @@ services:
       - "8080:8080"
 
   worker-services:
-    container_name: worker-servicess
+    container_name: worker-services
     image: msvc-worker:v1
     depends_on:
       - kafka

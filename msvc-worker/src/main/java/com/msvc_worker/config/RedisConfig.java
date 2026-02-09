@@ -1,6 +1,7 @@
 package com.msvc_worker.config;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,18 +44,18 @@ public class RedisConfig {
 
     // Se configura la serialización porque Redis entiende por bytes no por Java Objects
     @Bean
-    public ReactiveRedisOperations<String, Object> reactiveRedisOperations
+    public ReactiveRedisOperations<String, JsonNode> reactiveRedisOperations
     (ReactiveRedisConnectionFactory reactiveRedisConnectionFactory) {
 
         // Serializer JSON para valores
-        Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<>(Object.class);
+        Jackson2JsonRedisSerializer<JsonNode> serializer = new Jackson2JsonRedisSerializer<>(JsonNode.class);
 
         // Builder del contexto de serialización
-        RedisSerializationContext.RedisSerializationContextBuilder<String, Object> builder =
+        RedisSerializationContext.RedisSerializationContextBuilder<String, JsonNode> builder =
                 RedisSerializationContext.newSerializationContext(new StringRedisSerializer());
 
         // Configuración completa de serialización
-        RedisSerializationContext<String, Object> context = builder
+        RedisSerializationContext<String, JsonNode> context = builder
                 .value(serializer)      // Valores normales
                 .hashKey(serializer)    // Claves en estructuras Hash
                 .hashValue(serializer)  // Valores en estructuras Hash
