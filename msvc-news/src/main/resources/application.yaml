@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: msvc-news
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVERS}
+  data:
+    redis:
+      host: ${REDIS_SERVER}
+      port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}
+
+server:
+  port: 8080
+
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_ENDPOINT}
